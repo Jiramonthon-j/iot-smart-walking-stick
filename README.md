@@ -1,4 +1,4 @@
-# IoT Smart Walking Stick (Smart-Stick-SS)
+# IoT Smart Walking Stick 
 
 An IoT-enabled assistive smart walking stick designed for the visually impaired and elderly, powered by MicroPython and ESP32.
 
