@@ -12,3 +12,9 @@ An IoT-enabled assistive smart walking stick designed for the visually impaired 
 - **Sensors:** HC-SR04 Ultrasonic, MPU6050 Gyro/Accelerometer
 - **Actuator:** Passive Buzzer
 - **Integrations:** Telegram Bot API (`urequests`), Wi-Fi Auto-connect
+
+<p align="center">
+<img width="400" height="533" alt="ไม้เท้าอัจฉริยะ" src="https://github.com/user-attachments/assets/d9d07ac7-2a84-4dcc-bb4c-c09ef29a93b0" />
+<br>
+  <sub><i>Fully Assembled IoT Smart Walking Stick Prototype</i></sub>
+</p>
