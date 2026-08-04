@@ -13,6 +13,9 @@ An IoT-enabled assistive smart walking stick designed for the visually impaired 
 - **Actuator:** Passive Buzzer
 - **Integrations:** Telegram Bot API (`urequests`), Wi-Fi Auto-connect
 
+<br>
+<h3 align="center">Prototype</h3>
+<br>
 <p align="center">
 <img width="400" height="533" alt="ไม้เท้าอัจฉริยะ" src="https://github.com/user-attachments/assets/d9d07ac7-2a84-4dcc-bb4c-c09ef29a93b0" />
 <br>
