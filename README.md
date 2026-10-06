@@ -29,6 +29,15 @@ An IoT-enabled assistive smart walking stick designed for the visually impaired 
 
 ---
 
+## ⚙️ Setup
+
+1. Flash MicroPython to the ESP32 and upload the `sonic` (HC-SR04) and `MPU6050` driver libraries.
+2. Copy `config.example.py` to `config.py` and fill in your WiFi networks and Telegram bot token / chat ID.
+   `config.py` is git-ignored, so credentials never end up in the repository.
+3. Upload `config.py` and `Smart Stick.py` to the board and run it.
+
+---
+
 ## 📸 Prototype Overview
 
 <p align="center">

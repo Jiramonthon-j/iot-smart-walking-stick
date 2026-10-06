@@ -1,0 +1,9 @@
+# Local secrets — never commit
+config.py
+
+# Python / editor noise
+__pycache__/
+*.pyc
+.vscode/
+.DS_Store
+Thumbs.db

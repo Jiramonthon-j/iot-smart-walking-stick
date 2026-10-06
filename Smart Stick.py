@@ -7,6 +7,9 @@ import time
 import network
 import urequests
 
+# Secrets live in config.py (not committed). Copy config.example.py -> config.py and fill in your values.
+from config import WIFI_NETWORKS, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+
 # Initialize Ultrasensor
 sensor = HCSR04(trigger_pin=5, echo_pin=18, echo_timeout_us=10000)
 threadhold_ultrasonic = 30
@@ -40,35 +43,26 @@ def read_acc():
     readacc_z = readacc["z"]
     return abs(readacc_x), abs(readacc_y), abs(readacc_z)
 
-# Connect Wifi
-def connect_wifi():
-    count = 0
-    ssid = 'REDACTED'  # Username
-    password = 'REDACTED'  # Password
+# Connect Wifi (tries each network in config.WIFI_NETWORKS in order)
+def connect_wifi(timeout_s=10):
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    wlan.connect(ssid, password)
-    
-    while not wlan.isconnected():
-        print('Connecting to WiFi...')
-        time.sleep(1)
-        count += 1
-        if count >= 10:
-            ssid = 'REDACTED'  # Username
-            password = 'REDACTED'  # Password
-            wlan2 = network.WLAN(network.STA_IF)
-            wlan2.active(True)
-            wlan2.connect(ssid, password)
-    
-    print('Connected to WiFi:', wlan2.ifconfig())
+    for ssid, password in WIFI_NETWORKS:
+        print('Connecting to WiFi:', ssid)
+        wlan.connect(ssid, password)
+        for _ in range(timeout_s):
+            if wlan.isconnected():
+                print('Connected to WiFi:', wlan.ifconfig())
+                return wlan
+            time.sleep(1)
+        wlan.disconnect()
+    raise RuntimeError('Could not connect to any configured WiFi network')
 
 # send the message to telegram
 def send_telegram_message(message):
-    telegram_token = 'REDACTED' # Telegram Token
-    chat_id = 'REDACTED'
-    url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     data = {
-        "chat_id": chat_id,
+        "chat_id": TELEGRAM_CHAT_ID,
         "text": message
     }
     try:
