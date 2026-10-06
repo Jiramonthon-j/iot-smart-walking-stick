@@ -1,3 +1,11 @@
+"""IoT Smart Walking Stick (MicroPython, ESP32)
+
+- HC-SR04 ultrasonic sensor: buzzer alarm when an obstacle is within 30 cm
+- MPU6050 gyro + accelerometer: detects a fall and sends a Telegram alert
+
+Upload this file to the board as main.py so it runs on boot.
+"""
+
 # Libraries
 from sonic import HCSR04
 from MPU6050 import MPU6050
@@ -12,12 +20,12 @@ from config import WIFI_NETWORKS, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 
 # Initialize Ultrasensor
 sensor = HCSR04(trigger_pin=5, echo_pin=18, echo_timeout_us=10000)
-threadhold_ultrasonic = 30
+threshold_ultrasonic = 30
 
 # Initialize Gyro (MPU6050)
 mpu = MPU6050()
-threadhold_gyro_acc = 7
-threadhold_gyro_axis = 60
+threshold_gyro_acc = 7
+threshold_gyro_axis = 60
 
 # Initialize Buzzer
 buzzer = Pin(2, Pin.OUT)
@@ -25,7 +33,7 @@ buzzer = Pin(2, Pin.OUT)
 # Return distance in cm
 def read_ultrasonic():
     distance = sensor.distance_cm()
-    return distance;
+    return distance
 
 # Function to read gyro axis
 def read_axis():
@@ -93,13 +101,13 @@ if __name__ == "__main__":
         x_acc, y_acc, z_acc = read_acc()
 
         # Ultrasonic condition
-        if distance <= threadhold_ultrasonic:
+        if distance <= threshold_ultrasonic:
             buzz()
 
         # Gyro and acceleration conditions
         if (
-            (x_axis > threadhold_gyro_axis or y_axis > threadhold_gyro_axis or z_axis > threadhold_gyro_axis) and
-            (x_acc > threadhold_gyro_acc or y_acc > threadhold_gyro_acc or z_acc > threadhold_gyro_acc)
+            (x_axis > threshold_gyro_axis or y_axis > threshold_gyro_axis or z_axis > threshold_gyro_axis) and
+            (x_acc > threshold_gyro_acc or y_acc > threshold_gyro_acc or z_acc > threshold_gyro_acc)
         ):
-            send_telegram_message("Bro help I fallen!!")
+            send_telegram_message("Fall detected! The user may need help.")
             buzz()
